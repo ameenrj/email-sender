@@ -5,16 +5,21 @@ spring:
 ---
 spring:
   profiles: dev
+server:
+  port: 8080
 gateway:
+  preferredMailProvider: common
   mailgun:
-    api: https://api.mailgun.net/v3/
+    api: https://api.mailgun.net/v3
     endpoint: /messages
     authorisation:
       key:
-    domain: sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org
-    send:
-      from: Excited Tester <test@sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org>
+    domain: /sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org
   sendGrid:
+    api: https://api.sendgrid.com/v3
+    endpoint: /mail/send
+    authorisation:
+      key:
 
 ---
 spring:

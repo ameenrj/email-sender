@@ -1,9 +1,9 @@
 package com.siteminder.email.service;
 
-import com.siteminder.email.domain.Email;
+import com.siteminder.email.domain.common.EmailDTO;
 import org.json.JSONObject;
 
 public interface MailgunSendService {
 
-    JSONObject sendEmail(Email email);
+    JSONObject sendEmail(EmailDTO email);
 }

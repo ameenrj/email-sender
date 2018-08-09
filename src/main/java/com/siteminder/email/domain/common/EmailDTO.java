@@ -1,11 +1,11 @@
-package com.siteminder.email.domain;
+package com.siteminder.email.domain.common;
 
 import java.util.List;
 
 /**
- * Email Data Transfer Object
+ * Email Data Transfer Object for Mailgun
  */
-public class Email {
+public class EmailDTO {
 
     private List<String> to;
     private List<String> cc;

@@ -4,7 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.siteminder.email.domain.Email;
+import com.siteminder.email.domain.common.EmailDTO;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -22,11 +22,11 @@ public class MailgunSendServiceImpl implements MailgunSendService {
     @Value("${gateway.mailgun.authorisation.key}") private String key;
     @Value("${gateway.mailgun.domain}") private String domain;
 
-    public JSONObject sendEmail(Email email) {
-        logger.debug("Sending email from " + email.getFrom() + " with subject " + email.getSubject());
+    public JSONObject sendEmail(EmailDTO email) {
+        logger.debug("Sending email using Mailgun");
 
         try {
-            HttpResponse<JsonNode> request = Unirest.post(api + domain + endpoint)
+            HttpResponse<JsonNode> response = Unirest.post(api + domain + endpoint)
                     .basicAuth("api", key)
                     .queryString("from", email.getFrom())
                     .queryString("to", email.getTo())
@@ -36,7 +36,7 @@ public class MailgunSendServiceImpl implements MailgunSendService {
                     .queryString("text", email.getBody())
                     .asJson();
 
-            JsonNode node = request.getBody();
+            JsonNode node = response.getBody();
             if (node.isArray()) {
                 throw new UnirestException("The request returns a JSON Array. Json: " +
                         node.getArray().toString(4));

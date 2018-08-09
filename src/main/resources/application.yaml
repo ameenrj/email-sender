@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: "dev"
+
+---
+spring:
+  profiles: dev
+gateway:
+  mailgun:
+    api: https://api.mailgun.net/v3/
+    endpoint: /messages
+    authorisation:
+      key:
+    domain: sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org
+    send:
+      from: Excited Tester <test@sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org>
+  sendGrid:
+
+---
+spring:
+  profiles: prod

@@ -1,9 +1,9 @@
 package com.siteminder.email.service;
 
+import com.siteminder.email.domain.payload.PayloadResponse;
 import com.siteminder.email.domain.sendGrid.SendGridRequestBody;
-import org.json.JSONObject;
 
 public interface SendGridSendService {
 
-    JSONObject sendEmail(SendGridRequestBody request);
+    PayloadResponse sendEmail(SendGridRequestBody request);
 }

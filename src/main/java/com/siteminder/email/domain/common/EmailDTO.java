@@ -1,5 +1,7 @@
 package com.siteminder.email.domain.common;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -7,10 +9,13 @@ import java.util.List;
  */
 public class EmailDTO {
 
-    private List<String> to;
-    private List<String> cc;
-    private List<String> bcc;
+    @NotEmpty
+    private List<@Email String> to;
+    private List<@Email String> cc;
+    private List<@Email String> bcc;
+    @NotEmpty
     private String from;
+    @NotEmpty
     private String subject;
     private String body;
 

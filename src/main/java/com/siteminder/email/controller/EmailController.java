@@ -1,10 +1,8 @@
 package com.siteminder.email.controller;
 
 import com.siteminder.email.domain.common.EmailDTO;
-import com.siteminder.email.domain.sendGrid.SendGridRequestBody;
-import com.siteminder.email.service.MailgunSendService;
-import com.siteminder.email.service.SendGridSendService;
-import org.json.JSONObject;
+import com.siteminder.email.domain.payload.PayloadResponse;
+import com.siteminder.email.service.EmailSendService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,38 +10,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {
 
-    private Logger logger = LoggerFactory.getLogger(EmailController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailController.class);
 
-    private MailgunSendService mailgunSendService;
-    private SendGridSendService sendGridSendService;
+    private EmailSendService emailSendService;
 
-    public EmailController(MailgunSendService mailgunSendService,
-                           SendGridSendService sendGridSendService) {
-        this.mailgunSendService = mailgunSendService;
-        this.sendGridSendService = sendGridSendService;
-    }
-
-    @RequestMapping("/")
-    public String index() {
-        return "Congratulations from EmailSendController.java";
+    public EmailController(EmailSendService emailSendService) {
+        this.emailSendService = emailSendService;
     }
 
     @PostMapping("/send")
-    public String sendEmail(@RequestBody EmailDTO email) {
-        // Validate request body
-        // Construct requestObject
-
+    public String sendEmail(@Valid @RequestBody EmailDTO email) {
         try {
-//            JSONObject jsonObject = mailgunSendService.sendEmail(email);
-            JSONObject jsonObject = sendGridSendService.sendEmail(new SendGridRequestBody(email));
-            return jsonObject.toString();
+            PayloadResponse response = emailSendService.sendEmail(email);
+            return response.toString();
         } catch (Exception e) {
-            logger.error(e.toString());
-            return e.toString();
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e.toString());
         }
     }
 }

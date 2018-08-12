@@ -7,8 +7,13 @@ spring:
   profiles: dev
 server:
   port: 8080
+logging:
+  level:
+    ROOT: DEBUG
 gateway:
-  preferredMailProvider: common
+  ## The mail provider used to send emails (the other will be used as backup in case of server error)
+  ## MUST either be MAILGUN or SENDGUN
+  preferredMailProvider: MAILGUN
   mailgun:
     api: https://api.mailgun.net/v3
     endpoint: /messages

@@ -1,5 +1,6 @@
 package com.siteminder.email.domain.sendGrid;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.siteminder.email.domain.common.EmailDTO;
 import org.springframework.boot.jackson.JsonComponent;
 
@@ -39,7 +40,9 @@ public class SendGridRequestBody {
 
     public class Personalizations {
         private List<To> to;
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
         private List<Cc> cc;
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
         private List<Bcc> bcc;
         private String subject;
 

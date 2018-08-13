@@ -5,6 +5,7 @@ import com.siteminder.email.domain.payload.PayloadResponse;
 import com.siteminder.email.service.EmailSendService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/email")
 public class EmailController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 
     private EmailSendService emailSendService;
 
@@ -30,8 +31,8 @@ public class EmailController {
             PayloadResponse response = emailSendService.sendEmail(email);
             return response.toString();
         } catch (Exception e) {
-            LOGGER.error(e.toString());
-            throw new RuntimeException(e.toString());
+            logger.error(e.toString());
+            return new PayloadResponse(HttpStatus.INTERNAL_SERVER_ERROR, e).toString();
         }
     }
 }

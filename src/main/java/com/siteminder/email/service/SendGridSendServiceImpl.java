@@ -3,7 +3,6 @@ package com.siteminder.email.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.siteminder.email.domain.payload.PayloadResponse;
@@ -19,34 +18,32 @@ import static com.siteminder.email.util.RequestUtil.*;
 @Service
 public class SendGridSendServiceImpl implements SendGridSendService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailgunSendServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MailgunSendServiceImpl.class);
 
     @Value("${gateway.sendGrid.api}") private String api;
     @Value("${gateway.sendGrid.endpoint}") private String endpoint;
     @Value("${gateway.sendGrid.authorisation.key}") private String key;
+    @Value("${gateway.connectTimeout}") private long connectTimeout;
+    @Value("${gateway.socketTimeout}") private long socketTimeout;
 
     @Override
     public PayloadResponse sendEmail(SendGridRequestBody requestBody) {
-        LOGGER.debug("Sending email using SendGrid");
+        logger.debug("Sending email using SendGrid");
 
         try {
+            Unirest.setTimeouts(connectTimeout, socketTimeout);
             ObjectMapper objectMapper = new ObjectMapper();
-            HttpResponse<JsonNode> response = Unirest.post(api + endpoint)
+            HttpResponse<String> response = Unirest.post(api + endpoint)
                     .header(AUTHORIZATION,BEARER + SPACE + key)
                     .header(CONTENT_TYPE, CONTENT_JSON)
                     .body(objectMapper.writeValueAsString(requestBody))
-                    .asJson();
+                    .asString();
 
-            JsonNode node = response.getBody();
-            if (node.isArray()) {
-                throw new UnirestException("The request returns a JSON Array. Json: " +
-                        node.getArray().toString(4));
-            } else {
-                return new PayloadResponse(response);
-            }
-        } catch (JsonProcessingException | UnirestException e) {
-            LOGGER.error("Error occurred while getting JSON object: " + e.toString());
-            throw new JSONException("Error occurred while getting JSON Object: " + e.getMessage());
+            return new PayloadResponse(response);
+        } catch (JsonProcessingException e) {
+            throw new JSONException("Error occurred while getting JSON Object: " + e.toString());
+        } catch (UnirestException e) {
+            throw new RuntimeException("Error occurred while sending email through Mailgun: " + e.getMessage());
         }
     }
 }

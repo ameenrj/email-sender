@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSendServiceImpl implements EmailSendService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailSendServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailSendServiceImpl.class);
 
     @Value("${gateway.preferredMailProvider}") private String preferredMailProvider;
 
@@ -26,7 +26,7 @@ public class EmailSendServiceImpl implements EmailSendService {
 
     @Override
     public PayloadResponse sendEmail(EmailDTO email) {
-        LOGGER.debug("First call to sendEmail");
+        logger.debug("First call to sendEmail");
         EmailProvider emailProvider = EmailProvider.fromString(preferredMailProvider);
         if (emailProvider == null) {
             throw new IllegalStateException("'gateway.preferredMailProvider' - " +
@@ -38,7 +38,7 @@ public class EmailSendServiceImpl implements EmailSendService {
             case MAILGUN:
                 response = mailgunSendService.sendEmail(email);
                 if (response.getHttpStatus().is5xxServerError()) {
-                    LOGGER.info(emailProvider.name() + " server error. Using alternate email service. " +
+                    logger.info(emailProvider.name() + " server error. Using alternate email service. " +
                             "Payload Response: " + response.toString());
                     response = sendGridSendService.sendEmail(new SendGridRequestBody(email));
                 }
@@ -46,7 +46,7 @@ public class EmailSendServiceImpl implements EmailSendService {
             case SENDGRID:
                 response = sendGridSendService.sendEmail(new SendGridRequestBody(email));
                 if (response.getHttpStatus().is5xxServerError()) {
-                    LOGGER.info(emailProvider.name() + " server error. Using alternate email service. " +
+                    logger.info(emailProvider.name() + " server error. Using alternate email service. " +
                             "Payload Response: " + response.toString());
                     response = mailgunSendService.sendEmail(email);
                 }

@@ -18,13 +18,15 @@ gateway:
     api: https://api.mailgun.net/v3
     endpoint: /messages
     authorisation:
-      key:
+      key: ${MAILGUN_API_KEY}
     domain: /sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org
   sendGrid:
     api: https://api.sendgrid.com/v3
     endpoint: /mail/send
     authorisation:
-      key:
+      key: ${SENDGRID_API_KEY}
+  connectTimeout: 3000
+  socketTimeout: 10000
 
 ---
 spring:

@@ -5,40 +5,41 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 public class PayloadResponse {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PayloadResponse.class);
+    private static final Logger logger = LoggerFactory.getLogger(PayloadResponse.class);
 
-    private int statusCode;
-    private String statusMessage;
+    private int status;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String errorMessage;
+    private String message;
     @JsonIgnore
     private HttpStatus httpStatus;
 
-    public PayloadResponse(HttpResponse<JsonNode> response) {
+    public PayloadResponse(HttpStatus httpStatus, Exception e) {
+        this.status = httpStatus.value();
+        this.message = e.toString();
+        this.httpStatus = httpStatus;
+    }
+
+    public PayloadResponse(HttpResponse<String> response) {
         this.httpStatus = HttpStatus.resolve(response.getStatus());
-        this.statusCode = httpStatus.value();
-        this.statusMessage = httpStatus.getReasonPhrase();
-        if (!httpStatus.is2xxSuccessful()) {
-            this.errorMessage = response.getBody().toString();
+        this.status = httpStatus.value();
+        if (httpStatus.is2xxSuccessful()) {
+            this.message = httpStatus.getReasonPhrase();
+        } else {
+            this.message = response.getBody();
         }
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getStatus() {
+        return status;
     }
 
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
     public HttpStatus getHttpStatus() {
@@ -50,7 +51,7 @@ public class PayloadResponse {
         try {
             return new ObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
             return "Could not retrieve PayloadResponse JSON - " + e.toString();
         }
     }

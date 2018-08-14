@@ -17,6 +17,7 @@ public class EmailDTO {
     private String from;
     @NotEmpty
     private String subject;
+    @NotEmpty
     private String body;
 
     public List<String> getTo() {

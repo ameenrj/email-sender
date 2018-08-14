@@ -17,7 +17,7 @@ A REST API endpoint will be located at /email/send to receive necessary JSON dat
 
 - There is no need to support HTML email body types
     - (inferred) There is no need to support attachments
-- An email can be sent with no body
+- An email cannot be sent with no body
 - There is no need to support multiple "Personalizations" (using SendGrid) to specify different handling instructions for
  different recipients (See more at: https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html)
 
@@ -65,6 +65,11 @@ Using curl or a HTTP client such as Postman, POST the following JSON data to loc
 }
 ```
 
+All fields are mandatory. The validation rules are;
+- "to", "cc", "bcc" are all arrays of Strings in valid email format
+- "cc" and "bcc" be fields can be empty arrays, and thus optional
+- "to", "from", "subject", "body" cannot be null or empty
+
 NOTE: Make sure Mailgun and SendGrid allow you to send emails to the email addresses you have provided (e.g. a 
 limitation of a free account with Mailgun when you don't provide credit card details is the limitation to send emails
 only to authorised email addresses only - those who agree to receive emails)
@@ -76,12 +81,13 @@ failover. You can change this setting by changing the "gateway.preferredMailProv
 
 - Creation of SendGridRequestBody object seems expensive and long. *TODO*: Research for better implementation
 - Unit testing should be added *TODO*: Implement unit testing
-    -Example unit tests for EmailController;
-        -givenMailProviderAcceptsRequest_whenAnEmailIsSent_then200IsReceived
-        -givenMailProviderErrors_whenAnEmailIsSent_then500IsReceived()
-        -givenValidSendEmailRequest_whenSendEmailEndpointIsHit_successfulValidation()
-        -givenInvalidSendEmailRequest_whenSendEmailEndpointIsHit_validationErrorIsReturned()
+    - Example unit tests for EmailController;
+        - givenMailProviderAcceptsRequest_whenAnEmailIsSent_then200IsReceived
+        - givenMailProviderErrors_whenAnEmailIsSent_then500IsReceived()
+        - givenValidSendEmailRequest_whenSendEmailEndpointIsHit_successfulValidation()
+        - givenInvalidSendEmailRequest_whenSendEmailEndpointIsHit_validationErrorIsReturned()
 - Integration test should be added *TODO*: Implement integration tests
+- Swagger documentation can be added to model the API *TODO*: Implement swagger documentation
 
 ## Thoughts
 

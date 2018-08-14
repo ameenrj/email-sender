@@ -69,6 +69,9 @@ NOTE: Make sure Mailgun and SendGrid allow you to send emails to the email addre
 limitation of a free account with Mailgun when you don't provide credit card details is the limitation to send emails
 only to authorised email addresses only - those who agree to receive emails)
 
+By default, the application is configured to use Mailgun as the primary email provider, and then Sendgrid as the 
+failover. You can change this setting by changing the "gateway.preferredMailProvider" property in the application.yml
+
 ## Concerns
 
 - Creation of SendGridRequestBody object seems expensive and long. *TODO*: Research for better implementation

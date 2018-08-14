@@ -1,4 +1,9 @@
-.gradle/*
-.idea/*
-build/*
-out/*
+.gradle
+/build
+/out
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr

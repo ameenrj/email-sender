@@ -1,19 +1,18 @@
-package com.siteminder.email.service;
+package com.company.email.service;
 
+import com.company.email.domain.sendGrid.SendGridRequestBody;
+import com.company.email.util.RequestUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.siteminder.email.domain.payload.PayloadResponse;
-import com.siteminder.email.domain.sendGrid.SendGridRequestBody;
+import com.company.email.domain.payload.PayloadResponse;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import static com.siteminder.email.util.RequestUtil.*;
 
 @Service
 public class SendGridSendServiceImpl implements SendGridSendService {
@@ -34,8 +33,8 @@ public class SendGridSendServiceImpl implements SendGridSendService {
             Unirest.setTimeouts(connectTimeout, socketTimeout);
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = Unirest.post(api + endpoint)
-                    .header(AUTHORIZATION,BEARER + SPACE + key)
-                    .header(CONTENT_TYPE, CONTENT_JSON)
+                    .header(RequestUtil.AUTHORIZATION, RequestUtil.BEARER + RequestUtil.SPACE + key)
+                    .header(RequestUtil.CONTENT_TYPE, RequestUtil.CONTENT_JSON)
                     .body(objectMapper.writeValueAsString(requestBody))
                     .asString();
 

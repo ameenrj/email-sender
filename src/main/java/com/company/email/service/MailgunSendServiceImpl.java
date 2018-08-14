@@ -1,10 +1,10 @@
-package com.siteminder.email.service;
+package com.company.email.service;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.siteminder.email.domain.common.EmailDTO;
-import com.siteminder.email.domain.payload.PayloadResponse;
+import com.company.email.domain.common.EmailDTO;
+import com.company.email.domain.payload.PayloadResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

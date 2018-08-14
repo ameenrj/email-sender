@@ -1,9 +1,9 @@
-package com.siteminder.email.service;
+package com.company.email.service;
 
-import com.siteminder.email.domain.common.EmailDTO;
-import com.siteminder.email.domain.common.EmailProvider;
-import com.siteminder.email.domain.payload.PayloadResponse;
-import com.siteminder.email.domain.sendGrid.SendGridRequestBody;
+import com.company.email.domain.common.EmailProvider;
+import com.company.email.domain.sendGrid.SendGridRequestBody;
+import com.company.email.domain.common.EmailDTO;
+import com.company.email.domain.payload.PayloadResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

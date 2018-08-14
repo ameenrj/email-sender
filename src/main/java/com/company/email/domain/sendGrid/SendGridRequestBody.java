@@ -1,7 +1,7 @@
-package com.siteminder.email.domain.sendGrid;
+package com.company.email.domain.sendGrid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.siteminder.email.domain.common.EmailDTO;
+import com.company.email.domain.common.EmailDTO;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.Collections;

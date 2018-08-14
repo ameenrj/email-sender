@@ -1,4 +1,4 @@
-package com.siteminder.email.domain.common;
+package com.company.email.domain.common;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

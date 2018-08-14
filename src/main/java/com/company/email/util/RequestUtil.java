@@ -1,4 +1,4 @@
-package com.siteminder.email.util;
+package com.company.email.util;
 
 public class RequestUtil {
     public static final String AUTHORIZATION = "Authorization";

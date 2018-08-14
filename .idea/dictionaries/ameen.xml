@@ -1,7 +1,9 @@
 <component name="ProjectDictionaryState">
   <dictionary name="ameen">
     <words>
+      <w>mailgun</w>
       <w>personalizations</w>
+      <w>sendgrid</w>
     </words>
   </dictionary>
 </component>

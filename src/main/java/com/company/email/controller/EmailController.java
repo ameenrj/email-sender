@@ -1,8 +1,8 @@
-package com.siteminder.email.controller;
+package com.company.email.controller;
 
-import com.siteminder.email.domain.common.EmailDTO;
-import com.siteminder.email.domain.payload.PayloadResponse;
-import com.siteminder.email.service.EmailSendService;
+import com.company.email.domain.common.EmailDTO;
+import com.company.email.service.EmailSendService;
+import com.company.email.domain.payload.PayloadResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -23,7 +23,7 @@ A REST API endpoint will be located at /email/send to receive necessary JSON dat
 
 ## Installation
 
-Required: Java 8 JDK installation
+Using: Java 8,, Gradle 4.9
 
 First, clone the project:
 ```
@@ -69,11 +69,16 @@ NOTE: Make sure Mailgun and SendGrid allow you to send emails to the email addre
 limitation of a free account with Mailgun when you don't provide credit card details is the limitation to send emails
 only to authorised email addresses only - those who agree to receive emails)
 
-You can find a live version f
-
 ## Concerns
 
 - Creation of SendGridRequestBody object seems expensive and long. *TODO*: Research for better implementation
+- Unit testing should be added *TODO*: Implement unit testing
+    -Example unit tests for EmailController;
+        -givenMailProviderAcceptsRequest_whenAnEmailIsSent_then200IsReceived
+        -givenMailProviderErrors_whenAnEmailIsSent_then500IsReceived()
+        -givenValidSendEmailRequest_whenSendEmailEndpointIsHit_successfulValidation()
+        -givenInvalidSendEmailRequest_whenSendEmailEndpointIsHit_validationErrorIsReturned()
+- Integration test should be added *TODO*: Implement integration tests
 
 ## Thoughts
 
@@ -83,4 +88,4 @@ rather than making another service call that could also fail
 (See more at: https://github.com/Netflix/Hystrix/wiki/How-To-Use#Fallback, https://spring.io/guides/gs/circuit-breaker/)
 - The default Unirest timeouts are 10000ms to connect and 60000ms for the socket timeout. This is too high for a 
 service relied on by a front-end, and so 3000ms and 10000ms have been used. These are configurable in the 
-application.yaml.
+application.yaml

@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: "dev"
+
+---
+spring:
+  profiles: dev
+server:
+  port: 8080
+logging:
+  level:
+    ROOT: DEBUG
+gateway:
+  ## The mail provider used to send emails (the other will be used as backup in case of server error)
+  ## MUST either be MAILGUN or SENDGUN
+  preferredMailProvider: MAILGUN
+  mailgun:
+    api: https://api.mailgun.net/v3
+    endpoint: /messages
+    authorisation:
+      key: ${MAILGUN_API_KEY}
+    domain: /sandbox3fc00bddd4334ba9ae11d2eb2218a94b.mailgun.org
+  sendGrid:
+    api: https://api.sendgrid.com/v3
+    endpoint: /mail/send
+    authorisation:
+      key: ${SENDGRID_API_KEY}
+  connectTimeout: 3000
+  socketTimeout: 10000
+
+---
+spring:
+  profiles: prod

@@ -1,4 +1,4 @@
-package com.siteminder.email.domain.payload;
+package com.company.email.domain.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

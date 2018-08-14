@@ -1,4 +1,4 @@
-package com.siteminder.email.domain.common;
+package com.company.email.domain.common;
 
 public enum EmailProvider {
     MAILGUN, SENDGRID;
